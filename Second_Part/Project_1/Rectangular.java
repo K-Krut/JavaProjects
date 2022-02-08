@@ -76,7 +76,7 @@ public class Rectangular extends Point_Class implements Virtual {
     @AnnotationReflectable(name = "toString")
     @Override
     public String toString() {
-        return "Project_1.Rectangular {height = " + height + ", width = " + width + "}";
+        return "Rectangular {height = " + height + ", width = " + width + "}";
     }
 
     @Override

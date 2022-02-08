@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public interface Virtual {
 
     void moving(double x, double y);
