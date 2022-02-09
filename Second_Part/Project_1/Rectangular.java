@@ -1,3 +1,5 @@
+package Project_1;
+
 import java.util.Objects;
 
 public class Rectangular extends Point_Class implements Virtual {
@@ -38,7 +40,7 @@ public class Rectangular extends Point_Class implements Virtual {
         this.height = height;
     }
 
-    @AnnotationReflectable(name="Getting Weight")
+    @AnnotationReflectable(name="Getting Width")
     public double getWidth() {
         return width;
     }
@@ -67,13 +69,13 @@ public class Rectangular extends Point_Class implements Virtual {
         return (x >= x0 && y >= y0 && x < x0 + getWidth() && y < y0 + getHeight());
     }
 
-    @AnnotationReflectable(name = "moving")
+//    @AnnotationReflectable(name = "moving")
     @Override
     public void moving(double x, double y) {
         super.moving(x, y);
     }
-
-    @AnnotationReflectable(name = "toString")
+//
+//    @AnnotationReflectable(name = "toString")
     @Override
     public String toString() {
         return "Rectangular {height = " + height + ", width = " + width + "}";

@@ -1,6 +1,9 @@
+package Project_1;
+
+import org.apache.commons.lang.StringUtils;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
@@ -10,23 +13,34 @@ public class Main {
         Rectangular rectangle_1 = new Rectangular(10.7, 20.8, 5.4, 3);
         System.out.printf("%s\n%s\n\n",point_1, rectangle_1);
 
-
-//        getting_class_fields(rectangle_1);
-//        getting_class_fields(point_1);
-
+        getting_class_fields(rectangle_1);
+        getting_class_fields(point_1);
 
 //        getting_method_by_name(rectangle_1, "toString");
 //        getting_filed_by_name(rectangle_1, "width");
-
-
+//
 //        get_annotations(rectangle_1);
 //        getting_annotated_methods(rectangle_1);
-
+//
+//        getting_class_methods(rectangle_1);
+//        getting_class_methods(point_1);
+//
+//        get_constructors(rectangle_1);
+//        Rectangle_constructor_test();
 
 //        check_invocation(rectangle_1);
     }
 
-
+    public static void getting_class_methods(Object object) throws Exception {
+        for (Method method : object.getClass().getMethods()) {
+            if (method.isAnnotationPresent(AnnotationReflectable.class)) {
+                method.setAccessible(true);
+                System.out.println(object.getClass().getSimpleName() + "." +
+                        method.getName() + "(" + get_types(method) + ") = " + method.invoke(object));
+            }
+        }
+        System.out.println();
+    }
 
     public static void getting_class_fields(Object object) throws Exception {
         System.out.println("getting_class_fields");
@@ -76,7 +90,6 @@ public class Main {
     }
 
     public static void get_annotations(Object object) throws ClassNotFoundException {
-        List<Field> annotatedFields = new LinkedList<Field>();
         for (Method method : object.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(AnnotationReflectable.class)){
                 for (Annotation annotation : method.getDeclaredAnnotations()) {
@@ -84,6 +97,30 @@ public class Main {
                 }
             }
         }
+    }
+
+    public static void get_constructors(Object object) {
+        for (Constructor<?> constructor : object.getClass().getConstructors()) {
+            System.out.println(constructor.getName() + "(" + get_types(constructor) + ")");
+        }
+    }
+    public static String get_types(Constructor<?> constructor){
+        return StringUtils.join(constructor.getParameterTypes(), ", ");
+    }
+    public static String get_types(Method method){
+        return StringUtils.join(method.getParameterTypes(), ", ");
+    }
+    public static void Rectangle_constructor_test(){
+        try {
+            Class[] params = {double.class, double.class, double.class, double.class};
+            System.out.println(Class.forName(Rectangular.class.getName()).
+                    getConstructor(params).newInstance(5.55,8.2,8.4, 4.1));
+
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void check_invocation(Rectangular rectangular) throws Exception {
@@ -116,56 +153,9 @@ public class Main {
 
 
 
+//for (Class<?> param: method.getParameterTypes()) {
+//    System.out.print(Arrays.toString(param.getTypeParameters()));
+//}
 
 
 
-//    public static void fun2(Object object) throws Exception {
-//        for (Method method : object.getClass().getMethods()) {
-//            if (method.isAnnotationPresent(AnnotationReflectable.class)) {
-//                method.setAccessible(true);
-//                System.out.println(object.getClass().getSimpleName() + "." + method.getName() + "() = " + method.invoke(object));
-//            }
-//        }
-//        System.out.println();
-//    }
-
-//      public static String MethodsTypes(Method method) {
-//        Class<?>[] parameterTypes = method.getParameterTypes();
-//        for (int i = 0; i < parameterTypes.length; i++) {
-//            if (i > 0) {
-//                System.out.print(", ");
-//            }
-//            System.out.print(parameterTypes[i].getName());
-//        }
-//        return "";
-//    }
-
-
-
-//    public static void fun4(Object object) throws Exception {
-//        System.out.println("# Project_1.Project_1.Main.fun4");
-//        Class<RegularPolygon> c = RegularPolygon.class;
-//        RegularPolygon r = (RegularPolygon) Proxy.newProxyInstance(c.getClassLoader(), new Class<?>[]{c},
-//                new Lab1.src.Project_1.Project_1.Main.MyImmutableProxyInvocationHandler(new MyRegularPolygon(10, 20, 5, 3)));
-//        System.out.println("r.getX() = " + r.getX());
-//        System.out.println("r.getVertexCount() = " + r.getVertexCount());
-//        r.setSide(123.4);
-//    }
-/*
-    public static void getting_class_annotated_methods(Object object) throws Exception {
-        for(Method method : object.getClass().getMethods()) {
-            if (method.isAnnotationPresent(Project_1.Project_1.AnnotationReflectable.class)) {
-                System.out.println(Arrays.toString(method.getDeclaredAnnotations()) + " = " + method.invoke(point));
-            }
-        }
-        System.out.println();
-    }
-    */
-//
-//    public static void getting_class_fields(Project_1.Project_1.Rectangular rectangular) throws Exception {
-//        for(Field field : rectangular.getClass().getDeclaredFields()) {
-//            field.setAccessible(true);
-//            System.out.println("rectangle." + field.getName() + " = " + field.get(rectangular));
-//        }
-//        System.out.println();
-//    }

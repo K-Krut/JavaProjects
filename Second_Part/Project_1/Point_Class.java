@@ -1,3 +1,5 @@
+package Project_1;
+
 import java.util.Objects;
 
 public class Point_Class {
@@ -13,7 +15,7 @@ public class Point_Class {
         x = 0;
         y = 0;
     }
-
+    @AnnotationReflectable(name="Getting x")
     public double getX() {
         return x;
     }
@@ -27,7 +29,7 @@ public class Point_Class {
         this.x = x;
     }
 
-    @AnnotationReflectable(name="Getting y")
+
     public void setY(double y) {
         this.y = y;
     }
@@ -39,6 +41,7 @@ public class Point_Class {
     }
 
     @Override
+    @AnnotationReflectable(name="toString")
     public String toString() {
         return "point {x = " + x + "; y = " + y + '}';
     }

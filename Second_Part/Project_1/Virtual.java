@@ -1,3 +1,5 @@
+package Project_1;
+
 public interface Virtual {
 
     void moving(double x, double y);
