@@ -150,12 +150,3 @@ public class Main {
         }
     }
 }
-
-
-
-//for (Class<?> param: method.getParameterTypes()) {
-//    System.out.print(Arrays.toString(param.getTypeParameters()));
-//}
-
-
-
