@@ -25,11 +25,11 @@ public class Task_39Test {
         assertEquals(expected, actual);
     }
     
-//    public static boolean Cheking(String strHex) {
-//        List<String> list = ConvertingToList("0123456789ABCDEFabcdef");
-//        List<String> listTemp = ConvertingToList(strHex);
-//        return list.containsAll(listTemp);
-//    }
+    public static boolean Cheking(String strHex) {
+        List<String> list = ConvertingToList("0123456789ABCDEFabcdef");
+        List<String> listTemp = ConvertingToList(strHex);
+        return list.containsAll(listTemp);
+    }
     
     @Test
     public void cheking() {
@@ -43,10 +43,5 @@ public class Task_39Test {
         Integer expected = TestObject.ConvertingDemical(str2);
         Integer actual = 758;
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void main() {
-
     }
 }
