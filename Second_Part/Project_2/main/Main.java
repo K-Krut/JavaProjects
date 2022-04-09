@@ -3,14 +3,16 @@ import org.apache.commons.lang.StringUtils;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Main {
 
     public static void main(String []args) throws Exception {
         Point_Class point_1 = new Point_Class(23, 42);
         Rectangular rectangle_1 = new Rectangular(5, 6, 7, 8);
-        System.out.printf("%s\n%s\n\n",point_1, rectangle_1);
+        //System.out.printf("%s\n%s\n\n",point_1, rectangle_1);
 
 //        getting_class_fields(rectangle_1);
 //        getting_class_fields(point_1);
@@ -19,7 +21,7 @@ public class Main {
 //        getting_filed_by_name(rectangle_1, "width");
 
 //        get_annotations(rectangle_1);
-//        getting_annotated_methods(rectangle_1);
+//        System.out.println(getting_annotated_methods(rectangle_1));
 
 //        getting_class_methods(rectangle_1);
 //        getting_class_methods(point_1);
@@ -27,10 +29,10 @@ public class Main {
 
 //         get_constructors(rectangle_1);
 //        Rectangle_constructor_test();
-//        check_invocation(rectangle_1);
+        check_invocation(rectangle_1);
 
         //System.out.println(getting_class_methods(rectangle_1));
-        System.out.println(getting_class_fields(rectangle_1));
+        //        System.out.println(getting_class_fields(rectangle_1));
 
     }
 
@@ -58,16 +60,20 @@ public class Main {
         return kek;
     }
 
-    public static void getting_annotated_methods(Object object) throws Exception {
-        System.out.println(object.getClass().getSimpleName());
+    public static String getting_annotated_methods(Object object) throws Exception {
+        ArrayList<String> list = new ArrayList<>();
         for (Method method : object.getClass().getDeclaredMethods()) {
-            for (Annotation annotation : method.getDeclaredAnnotations()) {
-                System.out.println("\n" + annotation);
-            }
-            System.out.print(method.isAnnotationPresent(AnnotationReflectable.class) ?
-                    method.getName() + "()\n\n" : method.getName() + "()\n"); //Arrays.toString(method.getTypeParameters())
-
+            list.add((!Objects.equals(getting_annotation(method), "") ? getting_annotation(method) + "\n" : "") + (method.isAnnotationPresent(AnnotationReflectable.class) ?
+                    method.getName() + "()\n\n" : method.getName() + "()\n")); //Arrays.toString(method.getTypeParameters())
         }
+        list.sort(Comparator.naturalOrder());
+        return StringUtils.join(list.toArray());
+    }
+
+    public static String getting_annotation(Method method) {
+        ArrayList<Annotation> list = new ArrayList<>();
+        Collections.addAll(list, method.getDeclaredAnnotations());
+        return StringUtils.join(list.toArray());
     }
 
     public static void getting_method_by_name(Object object, String name) throws Exception {
